@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incredible India — Discover the Soul of a Nation</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #FF6B00;
+    --deep-saffron: #E85D00;
+    --gold: #D4A017;
+    --emerald: #1A6B4A;
+    --ivory: #FAF5E9;
+    --charcoal: #1C1C1E;
+    --muted: #8B7355;
+    --cream: #F5EDD6;
+    --dark-bg: #0D0D0B;
+    --card-bg: rgba(255,255,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--dark-bg);
+    color: var(--ivory);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--saffron); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; width: 40px; height: 40px;
+    border: 1px solid rgba(255,107,0,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* ANIMATED BACKGROUND */
+  .bg-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; z-index: 0;
+    overflow: hidden;
+  }
+  .mandala-bg {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120vmax; height: 120vmax;
+    opacity: 0.035;
+    animation: rotateSlow 120s linear infinite;
+  }
+  @keyframes rotateSlow {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, var(--saffron), transparent);
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.1; }
+    100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+  }
+  .gradient-overlay {
+    position: fixed; inset: 0; z-index: 1;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(255,107,0,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, rgba(26,107,74,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 80% at 50% 50%, rgba(13,13,11,0.4) 0%, transparent 100%);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(13,13,11,0.7);
+    border-bottom: 1px solid rgba(212,160,23,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.15em;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(212,160,23,0.4);
+  }
+  .nav-logo span { color: var(--saffron); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(250,245,233,0.7); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-cta {
+    padding: 0.6rem 1.8rem;
+    border: 1px solid var(--saffron);
+    color: var(--saffron); font-size: 0.8rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; cursor: none;
+    transition: all 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .nav-cta:hover { background: var(--saffron); color: white; }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 8rem 2rem 4rem;
+  }
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 900; line-height: 0.95;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s 0.2s ease forwards;
+    opacity: 0;
+  }
+  .hero-title .line1 { display: block; color: var(--ivory); }
+  .hero-title .line2 { display: block; color: var(--saffron); font-style: italic; }
+  .hero-subtitle {
+    font-size: 1.3rem; font-weight: 300;
+    color: rgba(250,245,233,0.6); max-width: 550px;
+    line-height: 1.7; margin-bottom: 3rem;
+    animation: fadeInUp 1s 0.4s ease forwards;
+    opacity: 0;
+  }
+  .hero-btns {
+    display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeInUp 1s 0.6s ease forwards;
+    opacity: 0;
+  }
+  .btn-primary {
+    padding: 1rem 2.8rem;
+    background: var(--saffron); color: white;
+    font-size: 0.9rem; letter-spacing: 0.1em;
+    text-transform: uppercase; border: none;
+    text-decoration: none; cursor: none;
+    transition: all 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content: ''; position: absolute; inset: 0;
+    background: var(--deep-saffron);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-outline {
+    padding: 1rem 2.8rem;
+    border: 1px solid rgba(250,245,233,0.3); color: var(--ivory);
+    font-size: 0.9rem; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    cursor: none; transition: all 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .btn-outline:hover { border-color: var(--ivory); background: rgba(250,245,233,0.05); }
+
+  .hero-scroll {
+    position: absolute; bottom: 3rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    color: rgba(250,245,233,0.4); font-size: 0.75rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    animation: pulse 2s ease infinite;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--saffron), transparent);
+    animation: scrollLine 2s ease infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative; z-index: 2;
+    background: rgba(212,160,23,0.08);
+    border-top: 1px solid rgba(212,160,23,0.2);
+    border-bottom: 1px solid rgba(212,160,23,0.2);
+    padding: 2rem 6rem;
+    display: flex; justify-content: space-around; align-items: center;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--saffron);
+    letter-spacing: 0.05em; line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(250,245,233,0.5);
+    margin-top: 0.3rem;
+  }
+  .stat-divider {
+    width: 1px; height: 60px;
+    background: rgba(212,160,23,0.2);
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-size: 0.8rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--saffron);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--ivory);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* DESTINATIONS SECTION */
+  .destinations {
+    position: relative; z-index: 2;
+    padding: 7rem 4rem;
+  }
+  .destinations-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .destinations-header .right { text-align: right; }
+  .destinations-desc {
+    font-size: 1.1rem; color: rgba(250,245,233,0.55);
+    max-width: 380px; line-height: 1.8;
+  }
+
+  /* Filter Tabs */
+  .filter-tabs {
+    display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;
+  }
+  .tab {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid rgba(250,245,233,0.15);
+    background: transparent; color: rgba(250,245,233,0.5);
+    font-size: 0.8rem; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: none;
+    transition: all 0.3s;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .tab.active, .tab:hover {
+    border-color: var(--saffron); color: var(--saffron);
+    background: rgba(255,107,0,0.08);
+  }
+
+  .destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+  }
+
+  .dest-card {
+    position: relative; overflow: hidden;
+    cursor: none;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .dest-card:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+  .dest-card:nth-child(1) { grid-column: span 5; grid-row: span 2; min-height: 550px; }
+  .dest-card:nth-child(2) { grid-column: span 4; min-height: 250px; }
+  .dest-card:nth-child(3) { grid-column: span 3; min-height: 250px; }
+  .dest-card:nth-child(4) { grid-column: span 4; min-height: 280px; }
+  .dest-card:nth-child(5) { grid-column: span 3; min-height: 280px; }
+  .dest-card:nth-child(6) { grid-column: span 4; min-height: 300px; }
+  .dest-card:nth-child(7) { grid-column: span 4; min-height: 300px; }
+  .dest-card:nth-child(8) { grid-column: span 4; min-height: 300px; }
+
+  .card-img {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.6s ease;
+    filter: brightness(0.5) saturate(1.1);
+  }
+  .dest-card:hover .card-img { transform: scale(1.08); filter: brightness(0.6) saturate(1.2); }
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,13,11,0.95) 0%, transparent 60%);
+  }
+  .card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.8rem;
+  }
+  .card-region {
+    font-size: 0.7rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--saffron);
+    margin-bottom: 0.4rem;
+  }
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: white; margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+  .dest-card:nth-child(1) .card-name { font-size: 2.4rem; }
+  .card-desc {
+    font-size: 0.9rem; color: rgba(255,255,255,0.6);
+    line-height: 1.6; max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .dest-card:hover .card-desc { max-height: 80px; }
+  .card-tag {
+    display: inline-block;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid rgba(212,160,23,0.4);
+    color: var(--gold); font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 0.8rem;
+  }
+  .card-arrow {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    width: 40px; height: 40px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1rem;
+    opacity: 0; transition: opacity 0.3s, background 0.3s;
+  }
+  .dest-card:hover .card-arrow { opacity: 1; background: var(--saffron); border-color: var(--saffron); }
+
+  /* INTERACTIVE MAP */
+  .map-section {
+    position: relative; z-index: 2;
+    padding: 7rem 4rem;
+    background: rgba(255,255,255,0.01);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .map-layout {
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: 5rem; align-items: start;
+    margin-top: 4rem;
+  }
+  .map-sidebar h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; margin-bottom: 2rem;
+    color: var(--ivory);
+  }
+  .map-destinations { display: flex; flex-direction: column; gap: 1rem; }
+  .map-dest-item {
+    display: flex; align-items: center; gap: 1.2rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.07);
+    cursor: none; transition: all 0.3s;
+    position: relative;
+  }
+  .map-dest-item:hover, .map-dest-item.active {
+    border-color: var(--saffron);
+    background: rgba(255,107,0,0.05);
+  }
+  .map-dest-icon {
+    width: 44px; height: 44px;
+    background: rgba(255,107,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .map-dest-item.active .map-dest-icon { background: var(--saffron); }
+  .map-dest-info { flex: 1; }
+  .map-dest-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--ivory);
+  }
+  .map-dest-state {
+    font-size: 0.75rem; color: rgba(250,245,233,0.45);
+    letter-spacing: 0.08em;
+  }
+  .map-dest-km {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem; color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* SVG Map */
+  .india-map-container {
+    position: relative; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 2rem; border-radius: 2px;
+    min-height: 550px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .india-map-svg {
+    width: 100%; max-width: 480px;
+    filter: drop-shadow(0 20px 60px rgba(255,107,0,0.08));
+  }
+  .map-pin {
+    cursor: none;
+    transition: transform 0.3s;
+  }
+  .map-pin:hover { transform: scale(1.3); }
+  .pin-pulse {
+    animation: pinPulse 2s ease infinite;
+  }
+  @keyframes pinPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.8); }
+  }
+  .map-tooltip {
+    position: absolute; background: rgba(13,13,11,0.95);
+    border: 1px solid var(--saffron);
+    padding: 0.7rem 1.2rem; font-size: 0.85rem;
+    color: var(--ivory); pointer-events: none;
+    opacity: 0; transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+  .map-tooltip.show { opacity: 1; }
+
+  /* EXPERIENCES / GUIDES */
+  .experiences {
+    position: relative; z-index: 2;
+    padding: 7rem 4rem;
+  }
+  .exp-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem; margin-top: 4rem;
+  }
+  .exp-card {
+    padding: 2.5rem; border: 1px solid rgba(255,255,255,0.07);
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: none;
+  }
+  .exp-card::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; width: 3px; height: 100%;
+    background: var(--saffron);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.4s ease;
+  }
+  .exp-card:hover::before { transform: scaleY(1); }
+  .exp-card:hover { border-color: rgba(255,107,0,0.3); transform: translateX(4px); }
+  .exp-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+  .exp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--ivory);
+    margin-bottom: 1rem;
+  }
+  .exp-desc {
+    font-size: 1rem; color: rgba(250,245,233,0.5);
+    line-height: 1.8;
+  }
+  .exp-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1.5rem; color: var(--saffron);
+    font-size: 0.85rem; letter-spacing: 0.1em;
+    text-transform: uppercase; text-decoration: none;
+    cursor: none; transition: gap 0.3s;
+  }
+  .exp-card:hover .exp-link { gap: 1rem; }
+
+  /* GALLERY */
+  .gallery {
+    position: relative; z-index: 2;
+    padding: 7rem 4rem;
+    background: rgba(255,255,255,0.01);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .gallery-header { margin-bottom: 4rem; text-align: center; }
+  .gallery-scroll {
+    display: flex; gap: 1.5rem;
+    overflow-x: auto; padding-bottom: 1.5rem;
+    scrollbar-width: none;
+  }
+  .gallery-scroll::-webkit-scrollbar { display: none; }
+  .gallery-item {
+    flex-shrink: 0; position: relative;
+    overflow: hidden; cursor: none;
+    transition: transform 0.4s;
+  }
+  .gallery-item:hover { transform: scale(1.03); }
+  .gallery-item:nth-child(odd) { height: 350px; width: 280px; }
+  .gallery-item:nth-child(even) { height: 280px; width: 220px; margin-top: 50px; }
+  .g-img {
+    width: 100%; height: 100%;
+    background-size: cover; background-position: center;
+    filter: saturate(0.8) brightness(0.7);
+    transition: filter 0.4s;
+  }
+  .gallery-item:hover .g-img { filter: saturate(1.1) brightness(0.85); }
+  .g-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.5rem 1.2rem 1.2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: white;
+  }
+
+  /* TRAVEL GUIDE SECTION */
+  .guide {
+    position: relative; z-index: 2;
+    padding: 7rem 4rem;
+  }
+  .guide-layout {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; margin-top: 4rem;
+    align-items: center;
+  }
+  .guide-visual {
+    position: relative; height: 500px;
+  }
+  .guide-img-main {
+    position: absolute; width: 80%; height: 85%;
+    top: 0; left: 0;
+    background: url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800') center/cover;
+    filter: brightness(0.75);
+  }
+  .guide-img-accent {
+    position: absolute; width: 45%; height: 45%;
+    bottom: 0; right: 0;
+    background: url('https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400') center/cover;
+    border: 4px solid var(--dark-bg);
+    filter: brightness(0.8);
+  }
+  .guide-badge {
+    position: absolute; top: 50%; left: 55%;
+    transform: translate(-50%, -50%);
+    background: var(--saffron); color: white;
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    border: 3px solid var(--dark-bg);
+    z-index: 3;
+    animation: badgePulse 3s ease infinite;
+  }
+  @keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,0,0.4); }
+    50% { box-shadow: 0 0 0 15px rgba(255,107,0,0); }
+  }
+  .badge-num { font-size: 1.8rem; line-height: 1; }
+  .badge-text { font-size: 0.55rem; letter-spacing: 0.1em; }
+
+  .guide-tips { display: flex; flex-direction: column; gap: 1.5rem; }
+  .guide-tip {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    padding: 1.2rem; border-left: 2px solid rgba(255,107,0,0.2);
+    transition: border-color 0.3s;
+    cursor: none;
+  }
+  .guide-tip:hover { border-left-color: var(--saffron); }
+  .tip-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: rgba(255,107,0,0.3);
+    line-height: 1; flex-shrink: 0;
+    min-width: 40px;
+  }
+  .tip-content h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--ivory);
+    margin-bottom: 0.4rem;
+  }
+  .tip-content p {
+    font-size: 0.95rem; color: rgba(250,245,233,0.5);
+    line-height: 1.7;
+  }
+
+  /* SEASONS */
+  .seasons {
+    position: relative; z-index: 2;
+    padding: 5rem 4rem;
+    background: rgba(212,160,23,0.04);
+    border-top: 1px solid rgba(212,160,23,0.1);
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+  }
+  .seasons-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .season-card {
+    padding: 2rem; border: 1px solid rgba(255,255,255,0.07);
+    text-align: center; transition: all 0.3s; cursor: none;
+  }
+  .season-card:hover { background: rgba(255,255,255,0.03); border-color: rgba(212,160,23,0.3); }
+  .season-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .season-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.1em;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .season-months {
+    font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(250,245,233,0.4);
+    margin-bottom: 1rem;
+  }
+  .season-desc {
+    font-size: 0.9rem; color: rgba(250,245,233,0.55);
+    line-height: 1.7;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    position: relative; z-index: 2;
+    padding: 9rem 4rem; text-align: center;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,107,0,0.12) 0%, transparent 70%);
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900; color: var(--ivory);
+    margin-bottom: 1.5rem; line-height: 1;
+  }
+  .cta-section h2 em { color: var(--saffron); font-style: italic; }
+  .cta-section p {
+    font-size: 1.2rem; color: rgba(250,245,233,0.55);
+    max-width: 500px; margin: 0 auto 3rem;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 4rem;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+  .footer-brand p { font-size: 0.9rem; color: rgba(250,245,233,0.4); line-height: 1.7; max-width: 280px; }
+  .footer-col h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.15em;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-col ul a {
+    color: rgba(250,245,233,0.45); text-decoration: none;
+    font-size: 0.9rem; transition: color 0.3s; cursor: none;
+  }
+  .footer-col ul a:hover { color: var(--saffron); }
+  .footer-bottom {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 0.8rem; color: rgba(250,245,233,0.3); }
+
+  /* ORNAMENTAL DIVIDER */
+  .ornament {
+    text-align: center; padding: 2rem;
+    color: rgba(212,160,23,0.4); font-size: 1.5rem;
+    letter-spacing: 0.5em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 1rem 2rem; }
+    .destinations { padding: 5rem 2rem; }
+    .destinations-grid { grid-template-columns: repeat(6, 1fr); }
+    .dest-card:nth-child(1) { grid-column: span 6; min-height: 300px; }
+    .dest-card:nth-child(2) { grid-column: span 3; }
+    .dest-card:nth-child(3) { grid-column: span 3; }
+    .dest-card:nth-child(4) { grid-column: span 3; }
+    .dest-card:nth-child(5) { grid-column: span 3; }
+    .dest-card:nth-child(6) { grid-column: span 2; }
+    .dest-card:nth-child(7) { grid-column: span 2; }
+    .dest-card:nth-child(8) { grid-column: span 2; }
+    .map-layout { grid-template-columns: 1fr; }
+    .guide-layout { grid-template-columns: 1fr; }
+    .guide-visual { display: none; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .seasons-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { grid-template-columns: 1fr 1fr; }
+    .stats-bar { padding: 2rem; }
+  }
+  @media (max-width: 680px) {
+    nav { padding: 1rem; }
+    .nav-links { display: none; }
+    .destinations-header { flex-direction: column; gap: 1rem; }
+    .destinations-header .right { text-align: left; }
+    .destinations-grid { grid-template-columns: 1fr; }
+    .dest-card:nth-child(n) { grid-column: span 1 !important; min-height: 220px; }
+    .exp-grid { grid-template-columns: 1fr; }
+    .seasons-grid { grid-template-columns: 1fr 1fr; }
+    footer { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-bar { flex-direction: column; gap: 1.5rem; }
+    .stat-divider { width: 60px; height: 1px; }
+    .map-section, .destinations, .experiences, .gallery, .guide { padding: 5rem 1.5rem; }
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Animated Background -->
+<div class="bg-canvas" id="bgCanvas">
+  <svg class="mandala-bg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#D4A017" stroke-width="0.5">
+      <circle cx="400" cy="400" r="50"/><circle cx="400" cy="400" r="100"/>
+      <circle cx="400" cy="400" r="150"/><circle cx="400" cy="400" r="200"/>
+      <circle cx="400" cy="400" r="250"/><circle cx="400" cy="400" r="300"/>
+      <circle cx="400" cy="400" r="350"/>
+      <!-- Spokes -->
+      <line x1="400" y1="50" x2="400" y2="750"/>
+      <line x1="50" y1="400" x2="750" y2="400"/>
+      <line x1="133" y1="133" x2="667" y2="667"/>
+      <line x1="667" y1="133" x2="133" y2="667"/>
+      <line x1="67" y1="267" x2="733" y2="533"/>
+      <line x1="267" y1="67" x2="533" y2="733"/>
+      <line x1="733" y1="267" x2="67" y2="533"/>
+      <line x1="533" y1="67" x2="267" y2="733"/>
+      <!-- Petals -->
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(0,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(45,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(90,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(135,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(180,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(225,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(270,400,400)"/>
+      <ellipse cx="400" cy="250" rx="20" ry="60" transform="rotate(315,400,400)"/>
+    </g>
+  </svg>
+  <div id="particles"></div>
+</div>
+<div class="gradient-overlay"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">In<span>dia</span></div>
+  <ul class="nav-links">
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#map">Map</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#guide">Travel Guide</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Plan Your Trip</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">✦ Incredible India Tourism Portal ✦</p>
+  <h1 class="hero-title">
+    <span class="line1">Discover the</span>
+    <span class="line2">Soul of India</span>
+  </h1>
+  <p class="hero-subtitle">
+    From the snow-kissed Himalayas to the sun-drenched shores of Kerala —
+    a civilization 5,000 years in the making awaits your arrival.
+  </p>
+  <div class="hero-btns">
+    <a href="#destinations" class="btn-primary"><span>Explore Destinations</span></a>
+    <a href="#guide" class="btn-outline">Travel Guide</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">36</div><div class="stat-label">States & Union Territories</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat"><div class="stat-num">40+</div><div class="stat-label">UNESCO World Heritage Sites</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat"><div class="stat-num">22</div><div class="stat-label">Official Languages</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat"><div class="stat-num">5000</div><div class="stat-label">Years of Civilisation</div></div>
+</div>
+
+<!-- DESTINATIONS -->
+<section class="destinations" id="destinations">
+  <div class="destinations-header">
+    <div>
+      <p class="section-label reveal">✦ Must-Visit Places</p>
+      <h2 class="section-title reveal reveal-delay-1">Famous <em>Destinations</em></h2>
+    </div>
+    <div class="right">
+      <p class="destinations-desc reveal reveal-delay-2">Eight iconic landmarks that define India's timeless grandeur — from marble mausoleums to ancient cave temples.</p>
+    </div>
+  </div>
+  <div class="filter-tabs reveal">
+    <button class="tab active" onclick="filterDest('all', this)">All</button>
+    <button class="tab" onclick="filterDest('heritage', this)">Heritage</button>
+    <button class="tab" onclick="filterDest('nature', this)">Nature</button>
+    <button class="tab" onclick="filterDest('spiritual', this)">Spiritual</button>
+    <button class="tab" onclick="filterDest('beaches', this)">Beaches</button>
+  </div>
+  <div class="destinations-grid reveal">
+
+    <div class="dest-card" data-cat="heritage">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?w=900')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Uttar Pradesh</div>
+        <div class="card-name">Taj Mahal</div>
+        <div class="card-desc">A white marble testament to eternal love. Shah Jahan's tribute to Mumtaz Mahal — one of humanity's greatest architectural achievements.</div>
+        <div class="card-tag">UNESCO World Heritage</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="nature">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=700')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Jammu & Kashmir</div>
+        <div class="card-name">Dal Lake</div>
+        <div class="card-desc">The Jewel in the Crown of Kashmir — iconic shikaras on tranquil waters framed by the Himalayas.</div>
+        <div class="card-tag">Nature</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="heritage">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed31db2?w=600')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Maharashtra</div>
+        <div class="card-name">Gateway of India</div>
+        <div class="card-desc">Iconic basalt arch overlooking the Arabian Sea, symbol of Mumbai's colonial grandeur.</div>
+        <div class="card-tag">Landmark</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="spiritual">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=700')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Uttar Pradesh</div>
+        <div class="card-name">Varanasi Ghats</div>
+        <div class="card-desc">The world's oldest living city — where ancient rituals meet the sacred Ganges at dawn.</div>
+        <div class="card-tag">Spiritual</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="heritage">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1590077428593-a55bb07c4665?w=600')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Rajasthan</div>
+        <div class="card-name">Amber Fort</div>
+        <div class="card-desc">A majestic hilltop fortress that blends Rajput & Mughal architectural styles in amber-hued splendour.</div>
+        <div class="card-tag">UNESCO Heritage</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="nature">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Kerala</div>
+        <div class="card-name">Kerala Backwaters</div>
+        <div class="card-desc">A network of serene lagoons, lakes and canals lined with coconut palms — God's Own Country.</div>
+        <div class="card-tag">Nature</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="beaches">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1583294018439-bae5b0ee6c75?w=700')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Goa</div>
+        <div class="card-name">Baga Beach</div>
+        <div class="card-desc">Golden sands, turquoise waters, and legendary beach shacks that define Goa's vibrant spirit.</div>
+        <div class="card-tag">Beaches</div>
+      </div>
+    </div>
+
+    <div class="dest-card" data-cat="heritage">
+      <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1598091383021-15ddea10925d?w=700')"></div>
+      <div class="card-overlay"></div>
+      <div class="card-arrow">→</div>
+      <div class="card-content">
+        <div class="card-region">Maharashtra</div>
+        <div class="card-name">Ajanta Caves</div>
+        <div class="card-desc">Rock-cut Buddhist cave monuments with extraordinary murals dating back to 2nd century BCE.</div>
+        <div class="card-tag">UNESCO Heritage</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="map-section" id="map">
+  <p class="section-label reveal">✦ Interactive Map</p>
+  <h2 class="section-title reveal reveal-delay-1">India on the <em>Map</em></h2>
+
+  <div class="map-layout">
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem;font-size:1.3rem;">Select a Destination</h3>
+      <div class="map-destinations">
+        <div class="map-dest-item active" onclick="highlightPin('taj', this)">
+          <div class="map-dest-icon">🕌</div>
+          <div class="map-dest-info">
+            <div class="map-dest-name">Taj Mahal</div>
+            <div class="map-dest-state">Agra, Uttar Pradesh</div>
+          </div>
+          <div class="map-dest-km">2,451 km²</div>
+        </div>
+        <div class="map-dest-item" onclick="highlightPin('jaipur', this)">
+          <div class="map-dest-icon">🏰</div>
+          <div class="map-dest-info">
+            <div class="map-dest-name">Jaipur — Pink City</div>
+            <div class="map-dest-state">Rajasthan</div>
+          </div>
+          <div class="map-dest-km">484 km²</div>
+        </div>
+        <div class="map-dest-item" onclick="highlightPin('mumbai', this)">
+          <div class="map-dest-icon">🌆</div>
+          <div class="map-dest-info">
+            <div class="map-dest-name">Mumbai</div>
+            <div class="map-dest-state">Maharashtra</div>
+          </div>
+          <div class="map-dest-km">603 km²</div>
+        </div>
+        <div class="map-dest-item" onclick="highlightPin('varanasi', this)">
+          <div class="map-dest-icon">🛕</div>
+          <div class="map-dest-info">
+            <div class="map-dest-name">Varanasi</div>
+            <div class="map-dest-state">Uttar Pradesh</div>
+          </div>
+          <div class="map-dest-km">1,535 km²</div>
+        </div>
+        <div class="map-dest-item" onclick="highlightPin('kerala', this)">
+          <div class="map-dest-icon">🌴</div>
+          <div class="map-dest-info">
+            <div class="map-dest-name">Kerala Backwaters</div>
+            <div class="map-dest-state">Kerala</div>
+          </div>
+          <div class="map-dest-km">38,852 km²</div>
+        </div>
+        <div class="map-dest-item" onclick="highlightPin('ladakh', this)">
+          <div class="map-dest-icon">🏔</div>
+          <div class="map-dest-info">
+            <div class="map-dest-name">Ladakh</div>
+            <div class="map-dest-state">Ladakh UT</div>
+          </div>
+          <div class="map-dest-km">59,146 km²</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="india-map-container">
+      <svg class="india-map-svg" viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="pinGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FF6B00" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#FF6B00" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- Simplified India outline -->
+        <path d="M 180 20 L 240 25 L 280 40 L 300 60 L 310 90 L 330 80 L 360 90 L 380 110 L 370 130 L 350 140 L 360 160 L 350 180 L 330 175 L 320 190 L 330 210 L 320 230 L 300 240 L 280 260 L 270 290 L 260 320 L 250 360 L 240 390 L 230 420 L 215 450 L 205 470 L 200 490 L 195 470 L 185 445 L 175 420 L 160 390 L 150 360 L 140 330 L 130 300 L 120 270 L 110 250 L 100 230 L 90 210 L 80 190 L 90 170 L 80 150 L 70 130 L 80 110 L 100 100 L 110 80 L 120 60 L 140 40 L 160 25 Z"
+          fill="rgba(255,107,0,0.06)" stroke="rgba(255,107,0,0.4)" stroke-width="1.5"/>
+
+        <!-- State divisions (simplified) -->
+        <path d="M 180 20 L 240 25 L 310 90 L 280 100 L 240 95 L 200 100 L 180 80 Z" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <path d="M 100 150 L 180 140 L 200 180 L 150 190 L 90 170 Z" fill="rgba(26,107,74,0.05)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <path d="M 200 300 L 280 290 L 300 340 L 240 360 L 180 350 Z" fill="rgba(212,160,23,0.04)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+        <!-- Grid lines subtle -->
+        <line x1="0" y1="150" x2="420" y2="150" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,8"/>
+        <line x1="0" y1="300" x2="420" y2="300" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,8"/>
+        <line x1="140" y1="0" x2="140" y2="520" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,8"/>
+        <line x1="280" y1="0" x2="280" y2="520" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" stroke-dasharray="4,8"/>
+
+        <!-- PIN: Taj Mahal (Agra) -->
+        <g id="pin-taj" class="map-pin" onclick="highlightPin('taj')">
+          <circle cx="230" cy="170" r="18" fill="url(#pinGlow)" class="pin-pulse"/>
+          <circle cx="230" cy="170" r="7" fill="#FF6B00"/>
+          <circle cx="230" cy="170" r="4" fill="white"/>
+          <text x="242" y="168" fill="#FAF5E9" font-size="9" font-family="Cormorant Garamond">Taj Mahal</text>
+        </g>
+
+        <!-- PIN: Jaipur -->
+        <g id="pin-jaipur" class="map-pin" onclick="highlightPin('jaipur')">
+          <circle cx="165" cy="165" r="5" fill="#D4A017" opacity="0.7"/>
+          <circle cx="165" cy="165" r="3" fill="#D4A017"/>
+          <text x="115" y="162" fill="#FAF5E9" font-size="8" font-family="Cormorant Garamond" opacity="0.7">Jaipur</text>
+        </g>
+
+        <!-- PIN: Mumbai -->
+        <g id="pin-mumbai" class="map-pin" onclick="highlightPin('mumbai')">
+          <circle cx="140" cy="280" r="5" fill="#D4A017" opacity="0.7"/>
+          <circle cx="140" cy="280" r="3" fill="#D4A017"/>
+          <text x="90" y="278" fill="#FAF5E9" font-size="8" font-family="Cormorant Garamond" opacity="0.7">Mumbai</text>
+        </g>
+
+        <!-- PIN: Varanasi -->
+        <g id="pin-varanasi" class="map-pin" onclick="highlightPin('varanasi')">
+          <circle cx="255" cy="185" r="5" fill="#D4A017" opacity="0.7"/>
+          <circle cx="255" cy="185" r="3" fill="#D4A017"/>
+          <text x="258" y="183" fill="#FAF5E9" font-size="8" font-family="Cormorant Garamond" opacity="0.7">Varanasi</text>
+        </g>
+
+        <!-- PIN: Kerala -->
+        <g id="pin-kerala" class="map-pin" onclick="highlightPin('kerala')">
+          <circle cx="190" cy="400" r="5" fill="#D4A017" opacity="0.7"/>
+          <circle cx="190" cy="400" r="3" fill="#D4A017"/>
+          <text x="196" y="398" fill="#FAF5E9" font-size="8" font-family="Cormorant Garamond" opacity="0.7">Kerala</text>
+        </g>
+
+        <!-- PIN: Ladakh -->
+        <g id="pin-ladakh" class="map-pin" onclick="highlightPin('ladakh')">
+          <circle cx="230" cy="55" r="5" fill="#D4A017" opacity="0.7"/>
+          <circle cx="230" cy="55" r="3" fill="#D4A017"/>
+          <text x="236" y="53" fill="#FAF5E9" font-size="8" font-family="Cormorant Garamond" opacity="0.7">Ladakh</text>
+        </g>
+
+        <!-- Compass Rose -->
+        <g transform="translate(370, 460)">
+          <circle cx="0" cy="0" r="20" fill="none" stroke="rgba(212,160,23,0.3)" stroke-width="0.5"/>
+          <text x="0" y="-8" text-anchor="middle" fill="#D4A017" font-size="7" font-family="Bebas Neue">N</text>
+          <line x1="0" y1="-5" x2="0" y2="6" stroke="#D4A017" stroke-width="1"/>
+          <line x1="-6" y1="0" x2="6" y2="0" stroke="rgba(212,160,23,0.5)" stroke-width="0.5"/>
+        </g>
+
+        <!-- Scale -->
+        <line x1="30" y1="490" x2="110" y2="490" stroke="rgba(212,160,23,0.5)" stroke-width="1"/>
+        <text x="70" y="505" text-anchor="middle" fill="rgba(250,245,233,0.4)" font-size="7">500 km</text>
+      </svg>
+
+      <div class="map-tooltip" id="mapTooltip"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="experiences" id="experiences">
+  <p class="section-label reveal">✦ Curated Experiences</p>
+  <h2 class="section-title reveal reveal-delay-1">What <em>Awaits</em> You</h2>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-icon">🏛</div>
+      <h3 class="exp-title">Heritage Walks</h3>
+      <p class="exp-desc">Guided tours through millennia of history — from Mughal fortresses and Rajput palaces to ancient Buddhist monasteries carved into stone.</p>
+      <a href="#" class="exp-link">Explore →</a>
+    </div>
+    <div class="exp-card reveal reveal-delay-1">
+      <div class="exp-icon">🍛</div>
+      <h3 class="exp-title">Culinary Journeys</h3>
+      <p class="exp-desc">Savour 29 distinct regional cuisines — from Kashmiri Wazwan feasts to Chettinad spice trails, Kerala sadya on banana leaves, and Rajasthani dal baati.</p>
+      <a href="#" class="exp-link">Explore →</a>
+    </div>
+    <div class="exp-card reveal reveal-delay-2">
+      <div class="exp-icon">🐯</div>
+      <h3 class="exp-title">Wildlife Safaris</h3>
+      <p class="exp-desc">Encounter Bengal tigers in Ranthambore, Asian elephants in Corbett, snow leopards in Ladakh and one-horned rhinos in Kaziranga.</p>
+      <a href="#" class="exp-link">Explore →</a>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-icon">🧘</div>
+      <h3 class="exp-title">Wellness & Yoga</h3>
+      <p class="exp-desc">Rejuvenate with Ayurvedic therapies in Kerala, practice yoga at the birthplace of the discipline in Rishikesh, or meditate in Himalayan ashrams.</p>
+      <a href="#" class="exp-link">Explore →</a>
+    </div>
+    <div class="exp-card reveal reveal-delay-1">
+      <div class="exp-icon">🎭</div>
+      <h3 class="exp-title">Festivals & Culture</h3>
+      <p class="exp-desc">Experience Holi's riot of colour, Diwali's luminous splendour, the Pushkar Camel Fair, and Kolkata's magnificent Durga Puja pandal art.</p>
+      <a href="#" class="exp-link">Explore →</a>
+    </div>
+    <div class="exp-card reveal reveal-delay-2">
+      <div class="exp-icon">🚂</div>
+      <h3 class="exp-title">Scenic Train Journeys</h3>
+      <p class="exp-desc">Board the Darjeeling Himalayan Railway toy train, the Palace on Wheels through Rajasthan, or Konkan Railway's dramatic coastal run.</p>
+      <a href="#" class="exp-link">Explore →</a>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">✦ ॐ ✦</div>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <p class="section-label reveal">✦ Visual Impressions</p>
+    <h2 class="section-title reveal reveal-delay-1">India Through the <em>Lens</em></h2>
+  </div>
+  <div class="gallery-scroll reveal">
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600')"></div>
+      <div class="g-caption">Golden Temple, Amritsar</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600')"></div>
+      <div class="g-caption">New Delhi</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=600')"></div>
+      <div class="g-caption">Kashmir Valley</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600')"></div>
+      <div class="g-caption">Taj Mahal, Agra</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=600')"></div>
+      <div class="g-caption">Varanasi at Dawn</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600')"></div>
+      <div class="g-caption">Kerala Backwaters</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1590077428593-a55bb07c4665?w=600')"></div>
+      <div class="g-caption">Rajasthan Fort</div>
+    </div>
+    <div class="gallery-item">
+      <div class="g-img" style="background-image:url('https://images.unsplash.com/photo-1569761316261-9a8696fa2ca3?w=600')"></div>
+      <div class="g-caption">Himalayan Monastery</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section class="seasons">
+  <p class="section-label reveal" style="text-align:center">✦ Plan Smart</p>
+  <h2 class="section-title reveal reveal-delay-1" style="text-align:center">Best Time to <em>Visit</em></h2>
+  <div class="seasons-grid">
+    <div class="season-card reveal">
+      <div class="season-icon">❄️</div>
+      <div class="season-name">Winter</div>
+      <div class="season-months">October – February</div>
+      <div class="season-desc">Peak tourist season. Perfect for Rajasthan, Goa, and South India. Cool, crisp weather. Festivals like Diwali and Holi.</div>
+    </div>
+    <div class="season-card reveal reveal-delay-1">
+      <div class="season-icon">🌸</div>
+      <div class="season-name">Spring</div>
+      <div class="season-months">March – April</div>
+      <div class="season-desc">Flowers bloom in the Himalayas. Holi celebrations. Ideal for hill stations and North India before the heat peaks.</div>
+    </div>
+    <div class="season-card reveal reveal-delay-2">
+      <div class="season-icon">☀️</div>
+      <div class="season-name">Summer</div>
+      <div class="season-months">May – June</div>
+      <div class="season-desc">Best for Himalayas, Ladakh, and Kashmir. Hill stations like Shimla and Mussoorie are refreshingly cool.</div>
+    </div>
+    <div class="season-card reveal reveal-delay-3">
+      <div class="season-icon">🌧️</div>
+      <div class="season-name">Monsoon</div>
+      <div class="season-months">July – September</div>
+      <div class="season-desc">Lush green landscapes, waterfalls in full flow. Kerala and Northeast India are spectacular. Budget-friendly travel.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDE -->
+<section class="guide" id="guide">
+  <p class="section-label reveal">✦ Traveller's Companion</p>
+  <h2 class="section-title reveal reveal-delay-1">Essential <em>Travel Guide</em></h2>
+  <div class="guide-layout">
+    <div class="guide-visual">
+      <div class="guide-img-main"></div>
+      <div class="guide-img-accent"></div>
+      <div class="guide-badge">
+        <div class="badge-num">50+</div>
+        <div class="badge-text">Insider Tips</div>
+      </div>
+    </div>
+    <div>
+      <div class="guide-tips">
+        <div class="guide-tip reveal">
+          <div class="tip-num">01</div>
+          <div class="tip-content">
+            <h4>Visa & Entry</h4>
+            <p>India offers e-Visa (eTV) for 169 countries — apply online 4 days before travel. Tourist visas are valid for 1 year with multiple entry. Biometric data may be collected at airports.</p>
+          </div>
+        </div>
+        <div class="guide-tip reveal reveal-delay-1">
+          <div class="tip-num">02</div>
+          <div class="tip-content">
+            <h4>Getting Around</h4>
+            <p>Indian Railways covers 67,000+ km — book on IRCTC.in. Domestic flights connect all major cities. For heritage zones, hire a local auto-rickshaw or cycle-rickshaw for authentic immersion.</p>
+          </div>
+        </div>
+        <div class="guide-tip reveal reveal-delay-2">
+          <div class="tip-num">03</div>
+          <div class="tip-content">
+            <h4>Currency & Payments</h4>
+            <p>Indian Rupee (INR). UPI payments (Google Pay, PhonePe) are widely accepted. Carry cash for rural areas. ATMs are available in all cities and most towns.</p>
+          </div>
+        </div>
+        <div class="guide-tip reveal">
+          <div class="tip-num">04</div>
+          <div class="tip-content">
+            <h4>Cultural Etiquette</h4>
+            <p>Remove shoes before entering temples. Dress modestly at religious sites. Ask before photographing people. Namaste (hands folded) is a respectful universal greeting.</p>
+          </div>
+        </div>
+        <div class="guide-tip reveal reveal-delay-1">
+          <div class="tip-num">05</div>
+          <div class="tip-content">
+            <h4>Health & Safety</h4>
+            <p>Drink only bottled or purified water. Recommended vaccines: Hepatitis A/B, Typhoid. Travel insurance is strongly advised. Emergency: Police 100, Ambulance 108.</p>
+          </div>
+        </div>
+        <div class="guide-tip reveal reveal-delay-2">
+          <div class="tip-num">06</div>
+          <div class="tip-content">
+            <h4>Connectivity</h4>
+            <p>Buy a local SIM (Airtel/Jio) at the airport with your passport. 4G is available in most cities. Jio's tourist SIM plans offer 28-day unlimited data at affordable rates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-bg"></div>
+  <p class="section-label">✦ Begin Your Journey</p>
+  <h2>India Is <em>Calling</em></h2>
+  <p>Let us craft your perfect Indian adventure — personalised itineraries, expert guides, and unforgettable experiences await.</p>
+  <div class="hero-btns" style="justify-content:center">
+    <a href="#" class="btn-primary"><span>Plan My Trip</span></a>
+    <a href="#" class="btn-outline">Download Guide</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo">In<span>dia</span></div>
+    <p>Your gateway to the subcontinent's extraordinary diversity — crafted with love for the curious traveller who seeks depth beyond the postcard.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Destinations</h4>
+    <ul>
+      <li><a href="#">Rajasthan</a></li>
+      <li><a href="#">Kerala</a></li>
+      <li><a href="#">Himalayas</a></li>
+      <li><a href="#">Goa</a></li>
+      <li><a href="#">Tamil Nadu</a></li>
+      <li><a href="#">Northeast India</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Experiences</h4>
+    <ul>
+      <li><a href="#">Heritage Tours</a></li>
+      <li><a href="#">Wildlife Safaris</a></li>
+      <li><a href="#">Yoga Retreats</a></li>
+      <li><a href="#">Culinary Trails</a></li>
+      <li><a href="#">Festivals</a></li>
+      <li><a href="#">Train Journeys</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Plan & Go</h4>
+    <ul>
+      <li><a href="#">Visa Guide</a></li>
+      <li><a href="#">Travel Insurance</a></li>
+      <li><a href="#">Best Time to Visit</a></li>
+      <li><a href="#">Budget Calculator</a></li>
+      <li><a href="#">Contact a Guide</a></li>
+      <li><a href="#">FAQs</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2026 Incredible India Tourism Portal. Inspired by the Ministry of Tourism, India.</p>
+  <p style="color:rgba(250,245,233,0.3);font-size:0.8rem">✦ Atithi Devo Bhava — Guest is God ✦</p>
+</div>
+
+<script>
+// Custom Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animateCursor() {
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.12; ry += (my - ry) *.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('a, button, .dest-card, .exp-card, .map-dest-item, .tab, .map-pin, .gallery-item').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; ring.style.transform = 'translate(-50%,-50%) scale(1.4)'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.transform = 'translate(-50%,-50%) scale(1)'; });
+});
+
+// Floating Particles
+const particlesContainer = document.getElementById('particles');
+function createParticle() {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 6 + 2;
+  p.style.cssText = `
+    width: ${size}px; height: ${size}px;
+    left: ${Math.random() * 100}%;
+    animation-duration: ${Math.random() * 15 + 10}s;
+    animation-delay: ${Math.random() * 10}s;
+  `;
+  particlesContainer.appendChild(p);
+  setTimeout(() => p.remove(), 25000);
+}
+setInterval(createParticle, 600);
+
+// Scroll Reveal
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// Filter Tabs
+function filterDest(cat, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.dest-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.opacity = '1'; card.style.transform = '';
+    } else {
+      card.style.opacity = '0.25'; card.style.transform = 'scale(0.97)';
+    }
+  });
+}
+
+// Map Highlight
+const pinData = {
+  taj: { label: '🕌 Taj Mahal — Agra, UP', x: '230', y: '170' },
+  jaipur: { label: '🏰 Jaipur — Rajasthan', x: '165', y: '165' },
+  mumbai: { label: '🌆 Mumbai — Maharashtra', x: '140', y: '280' },
+  varanasi: { label: '🛕 Varanasi — Uttar Pradesh', x: '255', y: '185' },
+  kerala: { label: '🌴 Kerala Backwaters', x: '190', y: '400' },
+  ladakh: { label: '🏔 Ladakh — High Himalayas', x: '230', y: '55' },
+};
+function highlightPin(id, listItem) {
+  // Reset all pins
+  document.querySelectorAll('.map-pin circle').forEach(c => {
+    if (c.r.baseVal.value > 6) { c.setAttribute('fill', 'url(#pinGlow)'); c.style.opacity = '0'; }
+    else if (c.r.baseVal.value > 5) { c.setAttribute('fill', '#FF6B00'); }
+    else if (c.r.baseVal.value > 3) { c.setAttribute('fill', '#D4A017'); c.style.opacity = '0.7'; }
+  });
+  // Activate clicked
+  const pinEl = document.getElementById('pin-' + id);
+  if (pinEl) {
+    const circles = pinEl.querySelectorAll('circle');
+    if (circles[0]) { circles[0].style.opacity = '1'; }
+  }
+  // List items
+  document.querySelectorAll('.map-dest-item').forEach(i => i.classList.remove('active'));
+  if (listItem) listItem.classList.add('active');
+  else {
+    const keys = Object.keys(pinData);
+    const idx = keys.indexOf(id);
+    document.querySelectorAll('.map-dest-item')[idx]?.classList.add('active');
+  }
+}
+
+// Animated counter for stats
+function animateCount(el, target, suffix = '') {
+  let cur = 0; const step = target / 60;
+  const t = setInterval(() => {
+    cur += step; if (cur >= target) { cur = target; clearInterval(t); }
+    el.textContent = Math.floor(cur) + suffix;
+  }, 25);
+}
+const statsObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    const nums = document.querySelectorAll('.stat-num');
+    animateCount(nums[0], 36, '');
+    animateCount(nums[1], 40, '+');
+    animateCount(nums[2], 22, '');
+    animateCount(nums[3], 5000, '');
+    statsObs.disconnect();
+  }
+}, { threshold: 0.5 });
+statsObs.observe(document.querySelector('.stats-bar'));
+
+// Gallery drag-scroll
+const galleryScroll = document.querySelector('.gallery-scroll');
+let isDown = false, startX, scrollLeft;
+galleryScroll.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - galleryScroll.offsetLeft; scrollLeft = galleryScroll.scrollLeft; });
+galleryScroll.addEventListener('mouseleave', () => isDown = false);
+galleryScroll.addEventListener('mouseup', () => isDown = false);
+galleryScroll.addEventListener('mousemove', e => {
+  if (!isDown) return; e.preventDefault();
+  const x = e.pageX - galleryScroll.offsetLeft;
+  galleryScroll.scrollLeft = scrollLeft - (x - startX) * 1.5;
+});
+</script>
+</body>
+</html>
